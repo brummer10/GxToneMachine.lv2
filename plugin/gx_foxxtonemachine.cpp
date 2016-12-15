@@ -97,6 +97,7 @@ private:
 
   float*          pre_model;
   uint32_t        pre_model_;
+  uint32_t        prepre_model_;
  
   bool            needs_ramp_down;
   bool            needs_ramp_up;
@@ -136,6 +137,7 @@ Gx_foxxtonemachine_::Gx_foxxtonemachine_() :
   output(NULL),
   input(NULL),
   foxxtonemachine(foxxtonemachine::plugin()),
+  pre_model_(0),
   needs_ramp_down(false),
   needs_ramp_up(false)  {};
 
@@ -184,8 +186,8 @@ void Gx_foxxtonemachine_::connect_(uint32_t port,void* data)
     case EFFECTS_INPUT:
       input = static_cast<float*>(data);
       break;
-	case OCTAVE: 
-      pre_model = (float*)data; // , 0.0, 0.0, 1.0, 1.0 
+    case OCTAVE: 
+      pre_model = static_cast<float*>(data); // , 0.0, 0.0, 1.0, 1.0 
       break;
     default:
       break;
@@ -230,8 +232,10 @@ void Gx_foxxtonemachine_::run_dsp_(uint32_t n_samples)
   // do inplace processing at default
   memcpy(output, input, n_samples*sizeof(float));
   // run selected pre model
-  if (pre_model_ != *(pre_model)) {
-	needs_ramp_down = true;
+  if (pre_model_ != static_cast<uint32_t>(*(pre_model))) {
+    prepre_model_ = pre_model_;
+    pre_model_ = static_cast<uint32_t>(*(pre_model));
+    needs_ramp_down = true;
   }
   // check if raming is needed
   if (needs_ramp_down) {
@@ -245,7 +249,6 @@ void Gx_foxxtonemachine_::run_dsp_(uint32_t n_samples)
 	if (ramp_down <= 0.0) {
       // when ramped down, clear buffer from viberev class
       foxx_pre[pre_model_]->clear_state(foxx_pre[pre_model_]);
-      pre_model_ = *(pre_model);
       needs_ramp_down = false;
       needs_ramp_up = true;
       ramp_down = ramp_down_step;
