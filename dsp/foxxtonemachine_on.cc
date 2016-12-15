@@ -126,7 +126,7 @@ inline void Dsp::init(uint32_t samplingFreq)
 	fConst30 = ((fConst0 * (0 - (1.27507436443469e-22 + fConst19))) - 1.30348799185304e-20);
 	fConst31 = (7.06825184506108e-21 + (fConst0 * (1.48123635437846e-20 + (fConst0 * (7.24474070701531e-23 + fConst1)))));
 	fConst32 = (3.11003081182687e-21 + (fConst0 * (6.51743995926522e-21 + (fConst0 * (3.18768591108674e-23 + fConst3)))));
-	fConst33 = (0.75 * (faustpower<3>(fConst0) / fConst15));
+	fConst33 = (0.5 * (faustpower<3>(fConst0) / fConst15));
 	clear_state_f();
 }
 
