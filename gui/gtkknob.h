@@ -21,8 +21,8 @@
  * ----------------------------------------------------------------------------
  */
 
-#ifndef __GTK_KNOB_H__
-#define __GTK_KNOB_H__
+#ifndef __GTK_FOXX_KNOB_H__
+#define __GTK_FOXX_KNOB_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,21 +33,21 @@ extern "C" {
 
 G_BEGIN_DECLS
 
-#define GTK_TYPE_KNOB          (gtk_knob_get_type())
-#define GTK_KNOB(obj)          (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_KNOB, GtkKnob))
-#define GTK_IS_KNOB(obj)       (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_KNOB))
-#define GTK_KNOB_CLASS(klass)  (G_TYPE_CHECK_CLASS_CAST ((klass),  GTK_TYPE_KNOB, GtkKnobClass))
-#define GTK_IS_KNOB_CLASS(obj) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GTK_TYPE_KNOB))
-#define GTK_KNOB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_KNOB, GtkKnobClass))
+#define GTK_TYPE_FOXX_KNOB          (gtk_knob_get_type())
+#define GTK_FOXX_KNOB(obj)          (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_FOXX_KNOB, GtkFoxxKnob))
+#define GTK_IS_FOXX_KNOB(obj)       (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_FOXX_KNOB))
+#define GTK_FOXX_KNOB_CLASS(klass)  (G_TYPE_CHECK_CLASS_CAST ((klass),  GTK_TYPE_FOXX_KNOB, GtkFoxxKnobClass))
+#define GTK_IS_FOXX_KNOB_CLASS(obj) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GTK_TYPE_FOXX_KNOB))
+#define GTK_FOXX_KNOB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_FOXX_KNOB, GtkFoxxKnobClass))
 
-typedef struct _GtkKnob GtkKnob;
-typedef struct _GtkKnobClass GtkKnobClass;
+typedef struct _GtkFoxxKnob GtkFoxxKnob;
+typedef struct _GtkFoxxKnobClass GtkFoxxKnobClass;
 
-struct _GtkKnob {
+struct _GtkFoxxKnob {
 	GtkRange parent;
 };
 
-struct _GtkKnobClass {
+struct _GtkFoxxKnobClass {
 	GtkRangeClass parent_class;
 };
 
