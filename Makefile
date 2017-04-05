@@ -29,7 +29,7 @@
 	endif
 
 	# set bundle name
-	NAME = gx_foxxtonemachine
+	NAME = gx_tonemachine
 	BUNDLE = $(NAME).lv2
 	VER = 0.1
 	# set compile flags

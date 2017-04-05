@@ -33,24 +33,24 @@
 	foaf:mbox <mailto:guitarix-developer@lists.sourceforge.net> ;
 	rdfs:seeAlso <http://guitarix.sourceforge.net> .
 
-<http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_>
+<http://guitarix.sourceforge.net/plugins/gx_tonemachine_>
 	a doap:Project ;
 	doap:maintainer <http://guitarix.sourceforge.net#me> ;
-	doap:name "Gx_foxxtonemachine_" .
+	doap:name "Gx_tonemachine_" .
 
-<http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_#_foxxtonemachine_>
+<http://guitarix.sourceforge.net/plugins/gx_tonemachine_#_tonemachine_>
     a lv2:Plugin ,
         lv2:DistortionPlugin ;
     doap:maintainer <http://guitarix.sourceforge.net#me> ;
     doap:name "GxToneMachine";
     doap:license <http://opensource.org/licenses/isc> ;
-    lv2:project <http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_> ;
+    lv2:project <http://guitarix.sourceforge.net/plugins/gx_tonemachine_> ;
     lv2:optionalFeature lv2:hardRTCapable ;
       
     lv2:minorVersion 34;
     lv2:microVersion 0;
 
-  guiext:ui <http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_gui#_foxxtonemachine_>;
+  guiext:ui <http://guitarix.sourceforge.net/plugins/gx_tonemachine_gui#_tonemachine_>;
     
 rdfs:comment """
 
@@ -114,8 +114,8 @@ rdfs:comment """
         lv2:maximum 1.0 ;
     ] .
 
-<http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_gui#_foxxtonemachine_>
+<http://guitarix.sourceforge.net/plugins/gx_tonemachine_gui#_tonemachine_>
   a guiext:GtkUI;
-  guiext:binary <gx_foxxtonemachine_ui.so>;
+  guiext:binary <gx_tonemachine_ui.so>;
   guiext:requiredFeature guiext:makeResident;
   .

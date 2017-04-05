@@ -4,7 +4,7 @@
 
 <default-preset>
 	a pset:Preset ;
-	lv2:appliesTo <http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_#_foxxtonemachine_> ;
+	lv2:appliesTo <http://guitarix.sourceforge.net/plugins/gx_tonemachine_#_tonemachine_> ;
 	lv2:port [
 		lv2:symbol "OCTAVE" ;
 		pset:value 0.0

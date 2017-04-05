@@ -20,14 +20,14 @@
 @prefix lv2:  <http://lv2plug.in/ns/lv2core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-<http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_#_foxxtonemachine_>
+<http://guitarix.sourceforge.net/plugins/gx_tonemachine_#_tonemachine_>
     a lv2:Plugin ;
-    lv2:binary <gx_foxxtonemachine.so>  ;
-    rdfs:seeAlso <gx_foxxtonemachine.ttl> ,
+    lv2:binary <gx_tonemachine.so>  ;
+    rdfs:seeAlso <gx_tonemachine.ttl> ,
                  <modgui.ttl> .
 
 <default-preset>
     a <http://lv2plug.in/ns/ext/presets#Preset> ;
-    <http://lv2plug.in/ns/lv2core#appliesTo> <http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_#_foxxtonemachine_ ;
+    <http://lv2plug.in/ns/lv2core#appliesTo> <http://guitarix.sourceforge.net/plugins/gx_tonemachine_#_tonemachine_ ;
     <http://www.w3.org/2000/01/rdf-schema#label> "Default" ;
     <http://www.w3.org/2000/01/rdf-schema#seeAlso> <default-preset.ttl> .

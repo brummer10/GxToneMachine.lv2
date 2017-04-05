@@ -24,8 +24,8 @@
 
 #include <lv2.h>
 
-#define GXPLUGIN_URI "http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_"
-#define GXPLUGIN_UI_URI "http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_gui#_foxxtonemachine_"
+#define GXPLUGIN_URI "http://guitarix.sourceforge.net/plugins/gx_tonemachine_"
+#define GXPLUGIN_UI_URI "http://guitarix.sourceforge.net/plugins/gx_tonemachine_gui#_tonemachine_"
 
 
 typedef enum

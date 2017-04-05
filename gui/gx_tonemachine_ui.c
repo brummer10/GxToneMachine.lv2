@@ -8,7 +8,7 @@
 #include "lv2/lv2plug.in/ns/ext/urid/urid.h"
 #include "lv2/lv2plug.in/ns/extensions/ui/ui.h"
 
-#include "./gx_foxxtonemachine.h"
+#include "./gx_tonemachine.h"
 
 struct gx_args;
 

@@ -33,28 +33,28 @@
 	foaf:mbox <mailto:guitarix-developer@lists.sourceforge.net> ;
 	rdfs:seeAlso <http://guitarix.sourceforge.net> .
 
-<http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_>
+<http://guitarix.sourceforge.net/plugins/gx_tonemachine_>
 	a doap:Project ;
 	doap:maintainer <http://guitarix.sourceforge.net#me> ;
-	doap:name "Gx_foxxtonemachine_" .
+	doap:name "Gx_tonemachine_" .
 
-<http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_#_foxxtonemachine_>
+<http://guitarix.sourceforge.net/plugins/gx_tonemachine_#_tonemachine_>
     a lv2:Plugin ,
         lv2:DistortionPlugin ;
     doap:maintainer <http://guitarix.sourceforge.net#me> ;
     doap:name "GxToneMachine";
     doap:license <http://opensource.org/licenses/isc> ;
-    lv2:project <http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_> ;
+    lv2:project <http://guitarix.sourceforge.net/plugins/gx_tonemachine_> ;
     lv2:optionalFeature lv2:hardRTCapable ;
       
     lv2:minorVersion 34;
     lv2:microVersion 0;
     
 rdfs:comment """
-Analogous simulation of the Foxx(*) Tone Machine Pedal as LV2 plugin
+Analogous simulation of the (*) Tone Machine Pedal as LV2 plugin
 
 (*) Other product names modeled in this software are trademarks of their respective companies that do not endorse and are not associated or affiliated with this simulation.
-Foxx is trademark or trade name of other manufacturer and was used merely to identify the product whose sound was reviewed in the creation of this product.
+ is trademark or trade name of other manufacturer and was used merely to identify the product whose sound was reviewed in the creation of this product.
 All other trademarks are the property of their respective holders.
 """;
 

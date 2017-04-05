@@ -1,7 +1,7 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
-<http://guitarix.sourceforge.net/plugins/gx_foxxtonemachine_#_foxxtonemachine_>
+<http://guitarix.sourceforge.net/plugins/gx_tonemachine_#_tonemachine_>
     modgui:gui [
         modgui:resourcesDirectory <modgui> ;
         modgui:iconTemplate <modgui/icon-gxtonemachine.html> ;
