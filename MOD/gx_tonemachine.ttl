@@ -21,6 +21,7 @@
 @prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix mod: <http://moddevices.com/ns/mod#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix guiext: <http://lv2plug.in/ns/extensions/ui#>.
@@ -49,6 +50,9 @@
       
     lv2:minorVersion 34;
     lv2:microVersion 0;
+
+    mod:brand "Guitarix" ;
+    mod:label "GxToneMachine" ;
     
 rdfs:comment """
 Analogous simulation of the (*) Tone Machine Pedal as LV2 plugin
@@ -63,7 +67,7 @@ All other trademarks are the property of their respective holders.
             lv2:OutputPort ;
         lv2:index 0 ;
         lv2:symbol "out" ;
-        lv2:name "Out"
+        lv2:name "Out" ;
     ] , [
         a lv2:AudioPort ,
             lv2:InputPort ;
