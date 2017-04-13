@@ -190,7 +190,7 @@ double always_inline Dsp::symclip(double x) {
 	f -= i;
 	f = clip.data[i]*(1-f) + clip.data[i+1]*f;
     }
-    return copysign(f, -x);
+    return copysign(f, x);
 }
 
 void always_inline Dsp::compute(int count, FAUSTFLOAT *input0, FAUSTFLOAT *output0)
