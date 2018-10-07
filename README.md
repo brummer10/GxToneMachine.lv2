@@ -12,6 +12,7 @@ the following packages are needed to build GxToneMachine:
 - libcairo2-dev
 - libx11-dev
 - x11proto-dev
+- lv2-dev
 
 note that those packages could have different, but similar names 
 on different distributions. There is no configure script, 
