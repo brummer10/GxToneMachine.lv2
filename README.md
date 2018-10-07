@@ -9,9 +9,9 @@ Analogous simulation of the Foxx(*) Tone Machine Pedal as LV2 plugin
 the following packages are needed to build GxToneMachine:
 
 - libc6-dev
-- libgtk2.0-dev
-- libstdc++6-dev
-- lv2-dev
+- libcairo2-dev
+- libx11-dev
+- x11proto-dev
 
 note that those packages could have different, but similar names 
 on different distributions. There is no configure script, 
