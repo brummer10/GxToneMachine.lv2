@@ -117,6 +117,8 @@ rdfs:comment """
 <http://guitarix.sourceforge.net/plugins/gx_tonemachine_gui#_tonemachine_>
   a guiext:X11UI;
   guiext:binary <gx_tonemachine_ui.so>;
-        lv2:extensionData guiext::idle ; 
-        lv2:requiredFeature guiext:makeResident;
+        lv2:extensionData guiext::idle ;
+        lv2:extensionData guiext:resize ;
+        lv2:extensionData guiext:idleInterface;
+        lv2:requiredFeature guiext:idleInterface ;
   .
