@@ -174,10 +174,10 @@ typedef struct {
 	void *controller;
 	LV2UI_Write_Function write_function;
 	LV2UI_Resize* resize;
-} gx_foxxtonemachineUI;
+} gx_tonemachineUI;
 
 // forward declaration to resize window and cairo surface
-static void resize_event(gx_foxxtonemachineUI *ui);
+static void resize_event(gx_tonemachineUI *ui);
 
 /*---------------------------------------------------------------------
 -----------------------------------------------------------------------	
@@ -195,7 +195,7 @@ cairo_status_t png_stream_reader (void *_stream, unsigned char *data, unsigned i
 	return CAIRO_STATUS_SUCCESS;
 }
 
-cairo_surface_t *cairo_image_surface_create_from_stream (gx_foxxtonemachineUI* ui, const unsigned char* name) {
+cairo_surface_t *cairo_image_surface_create_from_stream (gx_tonemachineUI* ui, const unsigned char* name) {
 	ui->png_stream.data = name;
 	ui->png_stream.position = 0;
 	return cairo_image_surface_create_from_png_stream(&png_stream_reader, (void *)&ui->png_stream);
@@ -214,7 +214,7 @@ static LV2UI_Handle instantiate(const LV2UI_Descriptor * descriptor,
 			LV2UI_Controller controller, LV2UI_Widget * widget,
 			const LV2_Feature * const * features) {
 
-	gx_foxxtonemachineUI* ui = (gx_foxxtonemachineUI*)malloc(sizeof(gx_foxxtonemachineUI));
+	gx_tonemachineUI* ui = (gx_tonemachineUI*)malloc(sizeof(gx_tonemachineUI));
 
 	if (!ui) {
 		fprintf(stderr,"ERROR: failed to instantiate plugin with URI %s\n", plugin_uri);
@@ -306,7 +306,7 @@ static LV2UI_Handle instantiate(const LV2UI_Descriptor * descriptor,
 
 // cleanup after usage
 static void cleanup(LV2UI_Handle handle) {
-	gx_foxxtonemachineUI* ui = (gx_foxxtonemachineUI*)handle;
+	gx_tonemachineUI* ui = (gx_tonemachineUI*)handle;
 	cairo_destroy(ui->cr);
 	cairo_destroy(ui->crf);
 	cairo_surface_destroy(ui->pedal);
@@ -324,7 +324,7 @@ static void cleanup(LV2UI_Handle handle) {
 ----------------------------------------------------------------------*/
 
 // draw knobs and simple switches
-static void knob_expose(gx_foxxtonemachineUI *ui,gx_controller* knob) {
+static void knob_expose(gx_tonemachineUI *ui,gx_controller* knob) {
 	cairo_set_operator(ui->crf,CAIRO_OPERATOR_CLEAR);
 	cairo_paint(ui->crf);
 	cairo_set_operator(ui->crf,CAIRO_OPERATOR_OVER);
@@ -467,7 +467,7 @@ static void knob_expose(gx_foxxtonemachineUI *ui,gx_controller* knob) {
 }
 
 // draw the power switch (bypass)
-static void bypass_expose(gx_foxxtonemachineUI *ui, gx_controller* switch_) {
+static void bypass_expose(gx_tonemachineUI *ui, gx_controller* switch_) {
 	cairo_set_operator(ui->crf,CAIRO_OPERATOR_CLEAR);
 	cairo_paint(ui->crf);
 	cairo_set_operator(ui->crf,CAIRO_OPERATOR_OVER);
@@ -491,14 +491,14 @@ static void bypass_expose(gx_foxxtonemachineUI *ui, gx_controller* switch_) {
 }
 
 // select draw methode by controller type
-static void draw_controller(gx_foxxtonemachineUI *ui, gx_controller* controller) {
+static void draw_controller(gx_tonemachineUI *ui, gx_controller* controller) {
 	if (controller->type == KNOB) knob_expose(ui, controller);
 	else if (controller->type == SWITCH) knob_expose(ui, controller);
 	else if (controller->type == BSWITCH) bypass_expose(ui, controller);
 }
 
 // general XWindow expose callback, 
-static void _expose(gx_foxxtonemachineUI *ui) {
+static void _expose(gx_tonemachineUI *ui) {
 	static const char* plug_name = "GxToneMachine" ;
 	cairo_push_group (ui->cr);
 
@@ -533,7 +533,7 @@ static void _expose(gx_foxxtonemachineUI *ui) {
 }
 
 // redraw a single controller
-static void controller_expose(gx_foxxtonemachineUI *ui, gx_controller * control) {
+static void controller_expose(gx_tonemachineUI *ui, gx_controller * control) {
 	cairo_push_group (ui->cr);
 	cairo_scale (ui->cr, ui->rescale.x, ui->rescale.y);
 
@@ -564,7 +564,7 @@ static void controller_expose(gx_foxxtonemachineUI *ui, gx_controller * control)
 ----------------------------------------------------------------------*/
 
 // resize the xwindow and the cairo xlib surface
-static void resize_event(gx_foxxtonemachineUI *ui) {
+static void resize_event(gx_tonemachineUI *ui) {
 	XWindowAttributes attrs;
 	XGetWindowAttributes(ui->dpy, (Window)ui->parentXwindow, &attrs);
 	ui->width = attrs.width;
@@ -582,7 +582,7 @@ static void resize_event(gx_foxxtonemachineUI *ui) {
 }
 
 // send event when active controller changed
-static void send_controller_event(gx_foxxtonemachineUI *ui, int controller) {
+static void send_controller_event(gx_tonemachineUI *ui, int controller) {
 	XClientMessageEvent xevent;
 	xevent.type = ClientMessage;
 	xevent.message_type = ui->DrawController;
@@ -596,7 +596,7 @@ static void send_controller_event(gx_foxxtonemachineUI *ui, int controller) {
 /*------------- check and set state of controllers ---------------*/
 
 // check if controller value changed, if so, redraw
-static void check_value_changed(gx_foxxtonemachineUI *ui, int i, float* value) {
+static void check_value_changed(gx_tonemachineUI *ui, int i, float* value) {
 	if(fabs(*(value) - ui->controls[i].adj.value)>=0.00001) {
 		ui->controls[i].adj.value = *(value);
 		if (ui->block_event != ui->controls[i].port)
@@ -606,7 +606,7 @@ static void check_value_changed(gx_foxxtonemachineUI *ui, int i, float* value) {
 }
 
 // check if controller activation state changed, if so, redraw
-static void check_is_active(gx_foxxtonemachineUI *ui, int i, bool set) {
+static void check_is_active(gx_tonemachineUI *ui, int i, bool set) {
 	if (ui->controls[i].is_active != set) {
 		ui->controls[i].is_active = set;
 		send_controller_event(ui, i);
@@ -614,7 +614,7 @@ static void check_is_active(gx_foxxtonemachineUI *ui, int i, bool set) {
 }
 
 // check if controller is under mouse pointer
-static bool aligned(int x, int y, gx_controller *control, gx_foxxtonemachineUI *ui) {
+static bool aligned(int x, int y, gx_controller *control, gx_tonemachineUI *ui) {
 	double ax = (control->al.x * ui->rescale.x2)* ui->rescale.c;
 	double ay = (control->al.y  * ui->rescale.y2)* ui->rescale.c;
 	double aw = ax + (control->al.width * ui->rescale.c);
@@ -624,7 +624,7 @@ static bool aligned(int x, int y, gx_controller *control, gx_foxxtonemachineUI *
 }
 
 // get controller number under mouse pointer and make it active, or return false
-static bool get_active_ctl_num(gx_foxxtonemachineUI *ui, int *num) {
+static bool get_active_ctl_num(gx_tonemachineUI *ui, int *num) {
 	static bool ret;
 	ret = false;
 	for (int i=0;i<CONTROLS;i++) {
@@ -640,7 +640,7 @@ static bool get_active_ctl_num(gx_foxxtonemachineUI *ui, int *num) {
 }
 
 // get current active controller number, or return false
-static bool get_active_controller_num(gx_foxxtonemachineUI *ui, int *num) {
+static bool get_active_controller_num(gx_tonemachineUI *ui, int *num) {
 	for (int i=0;i<CONTROLS;i++) {
 		if (ui->controls[i].is_active) {
 			*(num) = i;
@@ -653,7 +653,7 @@ static bool get_active_controller_num(gx_foxxtonemachineUI *ui, int *num) {
 /*------------- mouse event handlings ---------------*/
 
 // mouse wheel scroll event
-static void scroll_event(gx_foxxtonemachineUI *ui, int direction) {
+static void scroll_event(gx_tonemachineUI *ui, int direction) {
 	float value;
 	int num;
 	if (get_active_ctl_num(ui, &num)) {
@@ -664,13 +664,13 @@ static void scroll_event(gx_foxxtonemachineUI *ui, int direction) {
 }
 
 // control is a switch, so switch value
-static void switch_event(gx_foxxtonemachineUI *ui, int i) {
+static void switch_event(gx_tonemachineUI *ui, int i) {
 	float value = ui->controls[i].adj.value ? 0.0 : 1.0;
 	check_value_changed(ui, i, &value);
 }
 
 // left mouse button is pressed, generate a switch event, or set controller active
-static void button1_event(gx_foxxtonemachineUI *ui, double* start_value) {
+static void button1_event(gx_tonemachineUI *ui, double* start_value) {
 	int num;
 	if (get_active_ctl_num(ui, &num)) {
 		if (ui->controls[num].type == BSWITCH ||ui->controls[num].type == SWITCH) {
@@ -682,7 +682,7 @@ static void button1_event(gx_foxxtonemachineUI *ui, double* start_value) {
 }
 
 // mouse move while left button is pressed
-static void motion_event(gx_foxxtonemachineUI *ui, double start_value, int m_y) {
+static void motion_event(gx_tonemachineUI *ui, double start_value, int m_y) {
 	static const double scaling = 0.5;
 	float value = 0.0;
 	int num;
@@ -701,7 +701,7 @@ static void motion_event(gx_foxxtonemachineUI *ui, double start_value, int m_y) 
 /*------------- keyboard event handlings ---------------*/
 
 // set min std or max value, depending on which key is pressed
-static void set_key_value(gx_foxxtonemachineUI *ui, int set_value) {
+static void set_key_value(gx_tonemachineUI *ui, int set_value) {
 	float value = 0.0;
 	int num;
 	if (get_active_controller_num(ui, &num)) {
@@ -713,7 +713,7 @@ static void set_key_value(gx_foxxtonemachineUI *ui, int set_value) {
 }
 
 // scroll up/down on key's up/right down/left
-static void key_event(gx_foxxtonemachineUI *ui, int direction) {
+static void key_event(gx_tonemachineUI *ui, int direction) {
 	float value;
 	int num;
 	if (get_active_controller_num(ui, &num)) {
@@ -724,7 +724,7 @@ static void key_event(gx_foxxtonemachineUI *ui, int direction) {
 }
 
 // set previous controller active on shift+tab key's
-static void set_previous_controller_active(gx_foxxtonemachineUI *ui) {
+static void set_previous_controller_active(gx_tonemachineUI *ui) {
 	int num;
 	if (get_active_controller_num(ui, &num)) {
 		ui->controls[num].is_active = false;
@@ -748,7 +748,7 @@ static void set_previous_controller_active(gx_foxxtonemachineUI *ui) {
 }
 
 // set next controller active on tab key
-static void set_next_controller_active(gx_foxxtonemachineUI *ui) {
+static void set_next_controller_active(gx_tonemachineUI *ui) {
 	int num;
 	if (get_active_controller_num(ui, &num)) {
 		ui->controls[num].is_active = false;
@@ -771,7 +771,7 @@ static void set_next_controller_active(gx_foxxtonemachineUI *ui) {
 }
 
 // get/set active controller on enter and leave notify
-void get_last_active_controller(gx_foxxtonemachineUI *ui, bool set) {
+void get_last_active_controller(gx_tonemachineUI *ui, bool set) {
 	static gx_controller *sc = NULL;
 	static int s = 0;
 	int num;
@@ -833,7 +833,7 @@ static int key_mapping(Display *dpy, XKeyEvent *xkey) {
 /*------------- the event loop ---------------*/
 
 // general xevent handler
-static void event_handler(gx_foxxtonemachineUI *ui) {
+static void event_handler(gx_tonemachineUI *ui) {
 	XEvent xev;
 	static double start_value = 0.0;
 	static bool blocked = false;
@@ -946,7 +946,7 @@ static void event_handler(gx_foxxtonemachineUI *ui) {
 static void port_event(LV2UI_Handle handle, uint32_t port_index,
 						uint32_t buffer_size, uint32_t format,
 						const void * buffer) {
-	gx_foxxtonemachineUI* ui = (gx_foxxtonemachineUI*)handle;
+	gx_tonemachineUI* ui = (gx_tonemachineUI*)handle;
 	float value = *(float*)buffer;
 	for (int i=0;i<CONTROLS;i++) {
 		if (port_index == ui->controls[i].port) {
@@ -959,14 +959,14 @@ static void port_event(LV2UI_Handle handle, uint32_t port_index,
 
 // LV2 idle interface to host
 static int ui_idle(LV2UI_Handle handle) {
-	gx_foxxtonemachineUI* ui = (gx_foxxtonemachineUI*)handle;
+	gx_tonemachineUI* ui = (gx_tonemachineUI*)handle;
 	event_handler(ui);
 	return 0;
 }
 
 // LV2 resize interface to host
 static int ui_resize(LV2UI_Feature_Handle handle, int w, int h) {
-	gx_foxxtonemachineUI* ui = (gx_foxxtonemachineUI*)handle;
+	gx_tonemachineUI* ui = (gx_tonemachineUI*)handle;
 	if (ui) resize_event(ui);
 	return 0;
 }
